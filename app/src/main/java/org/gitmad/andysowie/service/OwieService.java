@@ -22,24 +22,30 @@ import org.gitmad.andysowie.activity.PowerActivity;
 public class OwieService extends Service implements SensorEventListener {
 
     public static final String ACTION_SERVICE_START
-            = "org.gitmad.andysowie.service.ACTION_SERVICE_START";
+            = "org.gitmad.andysowie.service.OwieService.ACTION_SERVICE_START";
     public static final String ACTION_SERVICE_STOP
-            = "org.gitmad.andysowie.service.ACTION_SERVICE_STOP";
+            = "org.gitmad.andysowie.service.OwieService.ACTION_SERVICE_STOP";
 
+    private static final String TAG
+            = "org.gitmad.andysowie.service.OwieService";
+
+    private static final String STOP_FILTER
+            = "org.gitmad.andysowie.service.OwieService.STOP_FILTER";
     private static final int NOTIFICATION_ID = 1;
     private static final int START_REQUEST_CODE = 2;
     private static final int STOP_REQUEST_CODE = 3;
-    private static final String STOP_FILTER = "org.gitmad.andysowie.service.STOP_FILTER";
 
     private static final float ZERO_APPROXIMATE
             = 1.25f;
     private static final float GRAVITY_APPROXIMATE
             = SensorManager.GRAVITY_EARTH - ZERO_APPROXIMATE;
+    private static final long FALLING_MIN_TIME_MILLIS = 360l;
 
     private SoundPool mSoundPool;
     private int mSoundId;
     private SensorManager mSensorManager;
     private boolean mIsFalling;
+    private long mFallingStartTime;
 
     private final BroadcastReceiver stopReceiver = new BroadcastReceiver() {
 
@@ -121,9 +127,14 @@ public class OwieService extends Service implements SensorEventListener {
 
         if (z <= ZERO_APPROXIMATE && !mIsFalling) {
             mIsFalling = true;
+            mFallingStartTime = System.currentTimeMillis();
         } else if (mIsFalling && z >= GRAVITY_APPROXIMATE) {
             mIsFalling = false;
-            mSoundPool.play(mSoundId, 0.99f, 0.99f, 0, 0, 0);
+            android.util.Log.d(TAG, "free fall time: "
+                    + (System.currentTimeMillis() - mFallingStartTime));
+            if (System.currentTimeMillis() - mFallingStartTime >= FALLING_MIN_TIME_MILLIS) {
+                mSoundPool.play(mSoundId, 0.99f, 0.99f, 0, 0, 0);
+            }
         }
     }
 }
