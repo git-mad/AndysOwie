@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Andy\'s Owie</string>
+
+    <string name="switch_on">Service in Use</string>
+    <string name="switch_off">Service Off</string>
+
+    <string name="stop_service">Alright, stop it</string>
+
+</resources>
