@@ -14,6 +14,7 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 
 import org.gitmad.andysowie.R;
 import org.gitmad.andysowie.activity.PowerActivity;
@@ -92,11 +93,11 @@ public class OwieService extends Service implements SensorEventListener {
                 = PendingIntent.getBroadcast(this, STOP_REQUEST_CODE,
                 stopServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        final Notification.Builder builder = new Notification.Builder(this)
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(getString(R.string.app_name))
                 .setPriority(Notification.PRIORITY_MIN)
-                .addAction(R.drawable.ic_launcher,
+                .addAction(R.drawable.ic_action_cancel,
                         getString(R.string.stop_service), stopServicePendingIntent)
                 .setContentIntent(startActivityPendingIntent);
         final Notification notification = builder.build();
