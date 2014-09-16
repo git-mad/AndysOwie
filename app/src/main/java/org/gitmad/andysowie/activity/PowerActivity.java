@@ -48,7 +48,6 @@ public class PowerActivity extends Activity {
                 }
             }
         });
-        mToggleButton.setChecked(isMyServiceRunning(OwieService.class));
     }
 
     @Override
@@ -56,6 +55,7 @@ public class PowerActivity extends Activity {
         super.onResume();
         registerReceiver(startReceiver, new IntentFilter(OwieService.ACTION_SERVICE_START));
         registerReceiver(stopReceiver, new IntentFilter(OwieService.ACTION_SERVICE_STOP));
+        mToggleButton.setChecked(isMyServiceRunning(OwieService.class));
     }
 
     @Override
