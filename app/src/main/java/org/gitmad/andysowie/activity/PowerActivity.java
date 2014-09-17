@@ -51,16 +51,21 @@ public class PowerActivity extends Activity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         registerReceiver(startReceiver, new IntentFilter(OwieService.ACTION_SERVICE_START));
         registerReceiver(stopReceiver, new IntentFilter(OwieService.ACTION_SERVICE_STOP));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mToggleButton.setChecked(isMyServiceRunning(OwieService.class));
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         unregisterReceiver(startReceiver);
         unregisterReceiver(stopReceiver);
     }
