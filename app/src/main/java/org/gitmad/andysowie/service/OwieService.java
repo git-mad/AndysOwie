@@ -104,7 +104,7 @@ public class OwieService extends Service implements SensorEventListener {
                 .setSmallIcon(R.drawable.ic_stat_ouch)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
                 .setContentTitle(getString(R.string.app_name))
-                .setPriority(Notification.PRIORITY_MIN)
+                .setPriority(NotificationCompat.PRIORITY_MIN)
                 .addAction(R.drawable.ic_action_cancel,
                         getString(R.string.stop_service), stopServicePendingIntent)
                 .setContentIntent(startActivityPendingIntent);
